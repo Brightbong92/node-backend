@@ -1,17 +1,20 @@
 const express = require('express');
 const app = express();
-const api = require('./routes/index');
-//const query = require('./routes/query');
-const Handler = require('./handler/Handler');
-
-const handler = new Handler();
-
+const cors = require('cors');
+const join = require('./routes/join');
+const login = require('./routes/login');
 const port = 3002;
 
-app.use('/api', api);
+//const AsyncHandler = require('./handler/AsyncHandler');
+//const asyncHandler = new AsyncHandler();
 
-app.use('/read', handler.readAll.bind(handler));
+app.use(cors()); // axios CORS policy troble shooting
+app.use(express.json()); //body-parser option in express
 
-//app.use('/read', query);
+//app.use('/join', asyncHandler.emailCheck.bind(asyncHandler));
+
+app.use('/join', join);
+app.use('/login', login);
+
 
 app.listen(port, ()=> console.log(`Listening on port ${port}`));
